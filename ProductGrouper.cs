@@ -2,21 +2,21 @@
 
 class ProductGrouper
 {
-    private readonly static string fakeStoreUrl = "https://fakestoreapi.com";
-    private readonly static string productsEndpoint = "/products";
-    private readonly static string productsOutputFileName = "grouped_products.json";
+    private readonly static string FAKE_STORE_URL = "https://fakestoreapi.com";
+    private readonly static string PRODUCTS_ENDPOINT = "/products";
+    private readonly static string PRODUCTS_OUTPUT_FILENAME = "grouped_products.json";
 
     private readonly static Dictionary<string, List<GroupedProduct>> categoryToProductMap = new();
 
     static async Task Main(string[] args)
     {
-        string? productsString = await GetRequest(fakeStoreUrl + productsEndpoint);
+        string? productsString = await GetRequest(FAKE_STORE_URL + PRODUCTS_ENDPOINT);
 
         while (productsString == null)
         {
             Console.WriteLine("Error while fetching products, retrying");
             Thread.Sleep(1000);
-            productsString = await GetRequest(fakeStoreUrl + productsEndpoint);
+            productsString = await GetRequest(FAKE_STORE_URL + PRODUCTS_ENDPOINT);
         }
 
         Console.WriteLine("Products fetched, deserializing");
@@ -68,7 +68,7 @@ class ProductGrouper
 
         Console.WriteLine(jsonString);
 
-        string binPath = Path.Combine(AppContext.BaseDirectory, productsOutputFileName);
+        string binPath = Path.Combine(AppContext.BaseDirectory, PRODUCTS_OUTPUT_FILENAME);
 
         File.WriteAllText(binPath, jsonString);
     }
