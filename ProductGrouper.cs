@@ -44,9 +44,12 @@ class ProductGrouper
                 categoryToProductMap.Add(product.Category, new List<GroupedProduct>());
             }
 
-            var list = categoryToProductMap[product.Category];
-            list.Add(GroupedProduct.Transform(product));
-            list.Sort((x, y) => x.Price.CompareTo(y.Price)); // Descending; lowest price first
+            categoryToProductMap[product.Category].Add(GroupedProduct.Transform(product));
+        }
+
+        foreach (var productList in categoryToProductMap.Values)
+        {
+            productList.Sort((x, y) => x.Price.CompareTo(y.Price));
         }
     }
 

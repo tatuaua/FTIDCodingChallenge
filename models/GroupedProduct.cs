@@ -1,5 +1,5 @@
 /// <summary>
-/// Represents a grouped product with simplified fields.
+/// Represents a grouped product
 /// </summary>
 class GroupedProduct
 {
