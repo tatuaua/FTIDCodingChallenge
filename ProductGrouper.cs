@@ -73,6 +73,7 @@ class ProductGrouper
         var options = new JsonSerializerOptions
         {
             WriteIndented = true,
+            Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping
         };
 
         string jsonString = JsonSerializer.Serialize(categoryToProductMap, options);
