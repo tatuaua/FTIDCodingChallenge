@@ -16,14 +16,14 @@ class Product
     /// <summary>
     /// Deserializes JSON string to a list of Product objects.
     /// </summary>
-    public static IList<Product> FromJSON(string jsonString)
+    public static List<Product> FromJSON(string jsonString)
     {
         var options = new JsonSerializerOptions
         {
             PropertyNameCaseInsensitive = true,
         };
 
-        IList<Product>? products = null;
+        List<Product>? products = null;
 
         try
         {

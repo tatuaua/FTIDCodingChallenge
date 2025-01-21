@@ -19,13 +19,11 @@ class ProductGrouper
 
         Console.WriteLine("Products fetched, deserializing");
 
-        IList<Product>? products = Product.FromJSON(productsString);
+        List<Product>? products = Product.FromJSON(productsString);
 
         Console.WriteLine("Products deserialized, transforming and grouping by category");
 
-        Dictionary<string, List<GroupedProduct>> categoryToProductsMap = new();
-
-        MapProducts(products, categoryToProductsMap);
+        Dictionary<string, List<GroupedProduct>> categoryToProductsMap = MapProducts(products);
 
         Console.WriteLine("Products grouped, writing to file");
 
@@ -34,9 +32,11 @@ class ProductGrouper
 
     /// <summary>
     /// Groups and sorts products by category.
-    /// </summary>
-    private static void MapProducts(IList<Product> products, IDictionary<string, List<GroupedProduct>> categoryToProductsMap)
+    /// </summary
+    private static Dictionary<string, List<GroupedProduct>> MapProducts(List<Product> products)
     {
+        Dictionary<string, List<GroupedProduct>> categoryToProductsMap = new();
+
         foreach (var product in products)
         {
             if (!categoryToProductsMap.ContainsKey(product.Category))
@@ -51,12 +51,14 @@ class ProductGrouper
         {
             productList.Sort((x, y) => x.Price.CompareTo(y.Price));
         }
+
+        return categoryToProductsMap;
     }
 
     /// <summary>
     /// Serializes the grouped products to JSON and writes to a file.
     /// </summary>
-    private static void WriteProductsToFile(IDictionary<string, List<GroupedProduct>> categoryToProductsMap)
+    private static void WriteProductsToFile(Dictionary<string, List<GroupedProduct>> categoryToProductsMap)
     {
         var options = new JsonSerializerOptions
         {
